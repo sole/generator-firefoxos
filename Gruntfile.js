@@ -1,7 +1,10 @@
 'use strict';
 
 module.exports = function (grunt) {
-  grunt.loadNpmTasks('grunt-contrib-jshint');
+  [
+   'grunt-contrib-jshint',
+   'grunt-contrib-copy'
+  ].forEach(grunt.loadNpmTasks);
 
   grunt.initConfig({
     // JS linter config
@@ -12,11 +15,32 @@ module.exports = function (grunt) {
       all: [
         'Gruntfile.js',
         'app/scripts/{,*/}*.js',
-        'app/scripts/vendor/{, */}*'
+        '!app/scripts/vendor/{, */}*'
       ]
+    },
+
+    copy: {
+      build: {
+        files: [
+          {
+            expand: true,
+            dot: true,
+            cwd: 'app',
+            src: [
+              'scripts/**/*.js',
+              'icons/**/*.{png,jpg,jpeg}',
+              'images/**/*.{png,gif,jpg,jpeg}',
+              '*.html',
+              'manifest.webapp'
+            ],
+            dest: 'build'
+          }
+        ]
+      }
     }
   });
 
-  grunt.registerTask('default', 'Default task', ['jshint']);
-};
+  grunt.registerTask('build', 'Build app', ['copy:build']);
+  grunt.registerTask('default', 'Default task', ['build']);
+}
 
