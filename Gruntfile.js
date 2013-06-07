@@ -2,8 +2,9 @@
 
 module.exports = function (grunt) {
   [
-   'grunt-contrib-jshint',
-   'grunt-contrib-copy'
+    'grunt-contrib-clean',
+    'grunt-contrib-copy',
+    'grunt-contrib-jshint'
   ].forEach(grunt.loadNpmTasks);
 
   grunt.initConfig({
@@ -18,6 +19,8 @@ module.exports = function (grunt) {
         '!app/scripts/vendor/{, */}*'
       ]
     },
+
+    clean: ['build'],
 
     copy: {
       build: {
@@ -41,6 +44,9 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('build', 'Build app', ['copy:build']);
-  grunt.registerTask('default', 'Default task', ['build']);
+  grunt.registerTask('default', 'Default task', [
+    'clean',
+    'build'
+  ]);
 }
 
