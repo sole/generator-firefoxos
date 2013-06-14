@@ -8,15 +8,20 @@ module.exports = function (grunt) {
     'grunt-contrib-sass'
   ].forEach(grunt.loadNpmTasks);
 
-  var sassFiles = [{
-    expand: true,
-    cwd: 'app/styles/',
-    src: ['**/*.{sass,scss}', '!**/_*'], // take sass files and ignore partials
-    dest: 'app/.tmp/styles/',
-    ext: '.css'
-  }];
-
+  var sassFiles = 
   grunt.initConfig({
+    // -- arbitrary properties --
+
+    sassFiles: [{
+      expand: true,
+      cwd: 'app/styles/',
+      src: ['**/*.{sass,scss}', '!**/_*'], // take sass files & ignore partials
+      dest: 'app/.tmp/styles/',
+      ext: '.css'
+    }],
+
+    // -- end of properties -----
+
     // JS linter config
     jshint: {
       options: {
@@ -39,7 +44,7 @@ module.exports = function (grunt) {
           style: 'expanded',
           lineComments: true
         },
-        files: sassFiles
+        files: '<%= sassFiles %>'
       },
       dist: {
         options: {
@@ -56,17 +61,26 @@ module.exports = function (grunt) {
     copy: {
       build: {
         files: [
+          // regular files
           {
             expand: true,
             dot: true,
             cwd: 'app',
             src: [
-              '.tmp/styles/**/*.css',
               'scripts/**/*.js',
               'icons/**/*.{png,jpg,jpeg}',
               'images/**/*.{png,gif,jpg,jpeg}',
               '*.html',
               'manifest.webapp'
+            ],
+            dest: 'build'
+          },
+          // files that have been compiled into .tmp
+          {
+            expand: true,
+            cwd: 'app/.tmp',
+            src: [
+              'styles/**/*.css'
             ],
             dest: 'build'
           }
