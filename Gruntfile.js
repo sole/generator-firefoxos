@@ -8,17 +8,13 @@ module.exports = function (grunt) {
     'grunt-contrib-sass'
   ].forEach(grunt.loadNpmTasks);
 
-  // put your sass files (not partials!) here
-  // remember that you can import files from sass with @import
-  var sassFiles = [
-    //'sample.sass',
-    'main.sass'
-  ].reduce(function (result, item) {
-    var src = 'app/styles/';
-    var dest = 'app/.tmp/styles/';
-    result[dest + item.replace(/\..*$/, '.css')] = src + item;
-    return result;
-  }, {});
+  var sassFiles = [{
+    expand: true,
+    cwd: 'app/styles/',
+    src: ['**/*.{sass,scss}', '!**/_*'], // take sass files and ignore partials
+    dest: 'app/.tmp/styles/',
+    ext: '.css'
+  }];
 
   grunt.initConfig({
     // JS linter config
