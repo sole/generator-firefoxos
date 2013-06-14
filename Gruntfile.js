@@ -9,18 +9,16 @@ module.exports = function (grunt) {
     'grunt-contrib-watch'
   ].forEach(grunt.loadNpmTasks);
 
-  var sassFiles = 
+  var sassFiles = [{
+    expand: true,
+    cwd: 'app/styles/',
+    src: ['**/*.{sass,scss}', '!**/_*'], // take sass files & ignore partials
+    dest: 'app/.tmp/styles/',
+    ext: '.css'
+  }];
+
   grunt.initConfig({
     // -- arbitrary properties --
-
-    sassFiles: [{
-      expand: true,
-      cwd: 'app/styles/',
-      src: ['**/*.{sass,scss}', '!**/_*'], // take sass files & ignore partials
-      dest: 'app/.tmp/styles/',
-      ext: '.css'
-    }],
-
     // -- end of properties -----
 
     // JS linter config
@@ -45,7 +43,7 @@ module.exports = function (grunt) {
           style: 'expanded',
           lineComments: true
         },
-        files: '<%= sassFiles %>'
+        files: sassFiles
       },
       dist: {
         options: {
