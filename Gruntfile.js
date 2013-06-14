@@ -117,6 +117,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('server', 'Launch local server', [
+    'clean',
     'build',
     'connect:server',
     'watch'
