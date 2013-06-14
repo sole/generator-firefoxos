@@ -5,7 +5,8 @@ module.exports = function (grunt) {
     'grunt-contrib-clean',
     'grunt-contrib-copy',
     'grunt-contrib-jshint',
-    'grunt-contrib-sass'
+    'grunt-contrib-sass',
+    'grunt-contrib-watch'
   ].forEach(grunt.loadNpmTasks);
 
   var sassFiles = 
@@ -54,42 +55,53 @@ module.exports = function (grunt) {
       }
     },
 
+    // watch config
+    watch: {
+      sass: {
+        files: ['app/styles/**/*.{scss,sass}'],
+        tasks: ['sass:dev', 'copy:sass']
+      }
+    },
+
     // clean config
     clean: ['build', 'app/.tmp'],
 
     // copy config
     copy: {
       build: {
-        files: [
-          // regular files
-          {
-            expand: true,
-            dot: true,
-            cwd: 'app',
-            src: [
-              'scripts/**/*.js',
-              'icons/**/*.{png,jpg,jpeg}',
-              'images/**/*.{png,gif,jpg,jpeg}',
-              '*.html',
-              'manifest.webapp'
-            ],
-            dest: 'build'
-          },
-          // files that have been compiled into .tmp
-          {
-            expand: true,
-            cwd: 'app/.tmp',
-            src: [
-              'styles/**/*.css'
-            ],
-            dest: 'build'
-          }
-        ]
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: 'app',
+          src: [
+            'scripts/**/*.js',
+            'icons/**/*.{png,jpg,jpeg}',
+            'images/**/*.{png,gif,jpg,jpeg}',
+            '*.html',
+            'manifest.webapp'
+          ],
+          dest: 'build'
+        }]
+      },
+      sass: {
+        files: [{
+          expand: true,
+          cwd: 'app/.tmp',
+          src: [
+            'styles/**/*.css'
+          ],
+          dest: 'build'
+        }]
       }
     }
   });
 
-  grunt.registerTask('build', 'Build app', ['sass:dev', 'copy:build']);
+  grunt.registerTask('build', 'Build app', [
+    'sass:dev',
+    'copy:build',
+    'copy:sass'
+  ]);
+
   grunt.registerTask('default', 'Default task', [
     'clean',
     'build'
