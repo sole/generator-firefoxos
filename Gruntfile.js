@@ -6,7 +6,8 @@ module.exports = function (grunt) {
     'grunt-contrib-copy',
     'grunt-contrib-jshint',
     'grunt-contrib-sass',
-    'grunt-contrib-watch'
+    'grunt-contrib-watch',
+    'grunt-contrib-connect'
   ].forEach(grunt.loadNpmTasks);
 
   var sassFiles = [{
@@ -58,6 +59,20 @@ module.exports = function (grunt) {
       sass: {
         files: ['app/styles/**/*.{scss,sass}'],
         tasks: ['sass:dev', 'copy:sass']
+      },
+      app: { // html & js
+        files: ['app/scripts/**/*.js', 'app/*.html'],
+        tasks: ['copy:build']
+      }
+    },
+
+    // server config
+    connect: {
+      server: {
+        options: {
+          port: 9000,
+          base: 'build'
+        }
       }
     },
 
@@ -95,9 +110,16 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('build', 'Build app', [
+    'jshint',
     'sass:dev',
     'copy:build',
     'copy:sass'
+  ]);
+
+  grunt.registerTask('server', 'Launch local server', [
+    'build',
+    'connect:server',
+    'watch'
   ]);
 
   grunt.registerTask('default', 'Default task', [
