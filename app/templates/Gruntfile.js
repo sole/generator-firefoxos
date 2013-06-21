@@ -1,4 +1,7 @@
 'use strict';
+var mountFolder = function (connect, dir) {
+  return connect.static(require('path').resolve(dir));
+};
 
 module.exports = function (grunt) {
   [
@@ -7,14 +10,15 @@ module.exports = function (grunt) {
     'grunt-contrib-jshint',
     'grunt-contrib-sass',
     'grunt-contrib-watch',
-    'grunt-contrib-connect'
+    'grunt-contrib-connect',
+    'grunt-mocha'
   ].forEach(grunt.loadNpmTasks);
 
   var sassFiles = [{
     expand: true,
     cwd: 'app/styles/',
     src: ['**/*.{sass,scss}', '!**/_*'], // take sass files & ignore partials
-    dest: 'app/.tmp/styles/',
+    dest: '.tmp/styles/',
     ext: '.css'
   }];
 
@@ -37,7 +41,7 @@ module.exports = function (grunt) {
     // SASS config
     sass: {
       options: {
-        cacheLocation: 'app/.tmp/.sass-cache'
+        cacheLocation: '.tmp/.sass-cache'
       },
       dev: {
         options: {
@@ -46,7 +50,7 @@ module.exports = function (grunt) {
         },
         files: sassFiles
       },
-      dist: {
+      release: {
         options: {
           style: 'compressed'
         },
@@ -58,11 +62,7 @@ module.exports = function (grunt) {
     watch: {
       sass: {
         files: ['app/styles/**/*.{scss,sass}'],
-        tasks: ['sass:dev', 'copy:sass']
-      },
-      app: { // html & js
-        files: ['app/scripts/**/*.js', 'app/*.html'],
-        tasks: ['copy:build']
+        tasks: ['sass:dev']
       }
     },
 
@@ -71,13 +71,44 @@ module.exports = function (grunt) {
       server: {
         options: {
           port: 9000,
-          base: 'build'
+          middleware: function (connect) {
+            return [
+              mountFolder(connect, '.tmp'),
+              mountFolder(connect, 'app')
+            ];
+          }
+        }
+      },
+      test: {
+        options: {
+          port: 9002,
+          middleware: function (connect) {
+            return [
+              mountFolder(connect, '.tmp'),
+              mountFolder(connect, 'test')
+            ];
+          }
+        }
+      }
+    },
+
+    // mocha (test) config
+    mocha: {
+      all: {
+        options: {
+          urls: ['http://0.0.0.0:<%= connect.test.options.port %>/index.html'],
+          bail: true,
+          reporter: 'Spec',
+          run: true
         }
       }
     },
 
     // clean config
-    clean: ['build', 'app/.tmp'],
+    clean: {
+      build: ['build', '.tmp'],
+      server: ['.tmp']
+    },
 
     // copy config
     copy: {
@@ -99,7 +130,7 @@ module.exports = function (grunt) {
       sass: {
         files: [{
           expand: true,
-          cwd: 'app/.tmp',
+          cwd: '.tmp',
           src: [
             'styles/**/*.css'
           ],
@@ -109,23 +140,44 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('build', 'Build app', [
+  grunt.registerTask('build', 'Build app release', [
     'jshint',
-    'sass:dev',
+    'clean:build',
+    'sass:release',
     'copy:build',
     'copy:sass'
   ]);
 
-  grunt.registerTask('server', 'Launch local server', [
-    'clean',
-    'build',
-    'connect:server',
-    'watch'
+  grunt.registerTask('test', 'Launch tests in shell with PhantomJS', [
+    'jshint',
+    'clean:server',
+    'sass:dev',
+    'connect:test',
+    'mocha'
   ]);
 
+  grunt.registerTask('server', 'Launch local server', function (target) {
+    if (target === 'test') {
+      grunt.task.run([
+        'jshint',
+        'clean:server',
+        'sass:dev',
+        'connect:test:keepalive'
+      ]);
+    }
+    else {
+      grunt.task.run([
+        'jshint',
+        'clean:server',
+        'sass:dev',
+        'connect:server',
+        'watch'
+      ]);
+    }
+  });
+
   grunt.registerTask('default', 'Default task', [
-    'clean',
-    'build'
+    'jshint'
   ]);
 };
 
