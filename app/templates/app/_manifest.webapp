@@ -1,6 +1,6 @@
 {
-  "name": "My App",
-  "description": "My elevator pitch goes here",
+  "name": "<%= appName %>",
+  "description": "An awesome Firefox OS app",
   "launch_path": "/index.html",
   "icons": {
     "60": "/app/icons/60.png",
@@ -8,8 +8,8 @@
     "128": "/app/icons/128.png"
   },
   "developer": {
-    "name": "Your name or organization",
-    "url": "http://your-homepage-here.org"
+    "name": "<%= devUserName %>",
+    "url": "https://github.com/<%= devUserName %>"
   },
   "default_locale": "en"
 }

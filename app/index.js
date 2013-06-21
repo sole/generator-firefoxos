@@ -35,10 +35,13 @@ FirefoxOSGenerator.prototype.askFor = function askFor() {
   console.log(welcome);
 
   var prompts = [{
-    name: 'someOption',
-    message: 'Would you like to enable this option?',
-    default: 'Y/n',
-    warning: 'Yes: Enabling this will be totally awesome!'
+    name: 'appName',
+    message: 'What do you want to call your app?',
+    default: 'My Firefox OS App'
+  },{
+    name: 'devUserName',
+    message: 'What is your Github username?',
+    default: 'rick-astley'
   }];
 
   this.prompt(prompts, function (err, props) {
@@ -46,7 +49,8 @@ FirefoxOSGenerator.prototype.askFor = function askFor() {
       return this.emit('error', err);
     }
 
-    this.someOption = (/y/i).test(props.someOption);
+    this.appName = props.appName;
+    this.devUserName = props.devUserName;
 
     cb();
   }.bind(this));
@@ -61,8 +65,8 @@ FirefoxOSGenerator.prototype.app = function app() {
   this.mkdir('app/images');
   this.mkdir('app/styles');
 
-  this.copy('app/manifest.webapp', 'app/manifest.webapp');
-  this.copy('app/index.html', 'app/index.html');
+  this.copy('app/_manifest.webapp', 'app/manifest.webapp');
+  this.copy('app/_index.html', 'app/index.html');
   this.copy('app/icons/120x120.png', 'app/icons/120x120.png');
   this.copy('app/icons/128x128.png', 'app/icons/128x128.png');
   this.copy('app/icons/60x60.png', 'app/icons/60x60.png');
