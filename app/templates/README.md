@@ -75,3 +75,25 @@ grunt clean
 Note that this will also delete Sass' cache files, that are being stored
 in `app/.tmp`.
 
+### Run tests
+
+Test use [Mocha](http://visionmedia.github.io/mocha/) as spec-based
+framework, [Sinon](http://www.sinonjs.org) to create mocks and stubs,
+and [Chai](http://www.chaijs.com/) for the expectations.
+
+You can run tests in the shell with:
+
+```bash
+grunt test
+```
+
+This will use PhantomJS as web browser, which is webkit-based. You
+probably want to run your tests in a Firefox Nightly browser with:
+
+```bash
+grunt server:test
+```
+
+This will start a web server in [0.0.0.0:9002](0.0.0.0:9002) with your
+test suite loaded in `/`.
+
