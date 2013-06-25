@@ -12,7 +12,8 @@ var FirefoxOSGenerator = module.exports = function FirefoxOSGenerator(
     this.installDependencies({ skipInstall: options['skip-install'] });
   });
 
-  this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+  this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname,
+                                                        '../package.json')));
 };
 
 util.inherits(FirefoxOSGenerator, yeoman.generators.NamedBase);
@@ -56,6 +57,24 @@ FirefoxOSGenerator.prototype.askFor = function askFor() {
   }.bind(this));
 };
 
+FirefoxOSGenerator.prototype._copyGaiaBB = function (dst) {
+  var done = this.async();
+
+  console.log('Gaia repository will now be downloaded.\nDepending on your' +
+              'connection, this will probably take a while.\n' +
+              'Don\'t panic!'.yellow);
+
+  this.remote('mozilla-b2g', 'gaia', function (err, remote) {
+    if (err) {
+      console.log('Error fetching Gaia');
+    }
+    else {
+      remote.directory('shared/style', dst);
+    }
+    done();
+  });
+};
+
 FirefoxOSGenerator.prototype.app = function app() {
   // app skeleton
   this.mkdir('app');
@@ -81,12 +100,15 @@ FirefoxOSGenerator.prototype.app = function app() {
   this.copy('test/lib/sinon.js', 'test/lib/sinon.js');
   this.copy('test/lib/chai.js', 'test/lib/chai.js');
 
+  // copy gaia's BB
+  this.mkdir('app/styles/gaiabb');
+  this._copyGaiaBB('app/styles/gaiabb');
 };
 
 FirefoxOSGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('package.json', 'package.json');
   this.copy('Gruntfile.js', 'Gruntfile.js');
   this.copy('jshintrc', '.jshintrc');
-  this.copy('README.md', 'README.md');
+  this.copy('_README.md', 'README.md');
 };
 

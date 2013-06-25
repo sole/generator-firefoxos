@@ -1,4 +1,4 @@
-# Your Firefox OS Awesome app
+# <%= appName %>
 
 ## Grunt tasks
 

@@ -11,6 +11,7 @@ module.exports = function (grunt) {
     'grunt-contrib-sass',
     'grunt-contrib-watch',
     'grunt-contrib-connect',
+    'grunt-contrib-cssmin',
     'grunt-mocha'
   ].forEach(grunt.loadNpmTasks);
 
@@ -58,11 +59,25 @@ module.exports = function (grunt) {
       }
     },
 
+    // CSS min config -> for concatenating Gaia BB's
+    cssmin: {
+      gaiabb: {
+        files: {
+          'app/styles/gaiabb/all.css': ['app/styles/gaiabb/**/*.css',
+                                        '!app/styles/gaiabb/all.css']
+        }
+      }
+    },
+
     // watch config
     watch: {
       sass: {
         files: ['app/styles/**/*.{scss,sass}'],
         tasks: ['sass:dev']
+      },
+      gaiabb: {
+        files: ['app/styles/gaiabb/**/*.css', '!app/styles/gaiabb/all.css'],
+        tasks: ['cssmin']
       }
     },
 
@@ -106,8 +121,8 @@ module.exports = function (grunt) {
 
     // clean config
     clean: {
-      build: ['build', '.tmp'],
-      server: ['.tmp']
+      build: ['build', '.tmp', 'app/styles/gaiabb/all.css'],
+      server: ['.tmp', 'app/styles/gaiabb/all.css']
     },
 
     // copy config
@@ -121,6 +136,10 @@ module.exports = function (grunt) {
             'scripts/**/*.js',
             'icons/**/*.{png,jpg,jpeg}',
             'images/**/*.{png,gif,jpg,jpeg}',
+            'styles/**/*.css',
+            '!styles/gaiabb/**/*.css',
+            'styles/gaiabb/all.css',
+            'styles/gaiabb/**/*.{png,gif,jpg,jpeg}',
             '*.html',
             'manifest.webapp'
           ],
@@ -144,6 +163,7 @@ module.exports = function (grunt) {
     'jshint',
     'clean:build',
     'sass:release',
+    'cssmin',
     'copy:build',
     'copy:sass'
   ]);
@@ -170,6 +190,7 @@ module.exports = function (grunt) {
         'jshint',
         'clean:server',
         'sass:dev',
+        'cssmin',
         'connect:server',
         'watch'
       ]);
