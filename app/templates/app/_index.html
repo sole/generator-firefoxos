@@ -3,7 +3,7 @@
   <head>
     <title><%= appName %></title>
     <meta charset="utf-8">
-    <link href="/styles/gaiabb/all.css" rel="stylesheet" type="text/css">
+    <% if (shallUseGaiaBB) { %><link href="/styles/gaiabb/all.css" rel="stylesheet" type="text/css"><% } %>
     <link href="/styles/main.css" rel="stylesheet" type="text/css">
     <script defer src="/scripts/main.js"></script>
   </head>

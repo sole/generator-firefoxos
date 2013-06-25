@@ -37,21 +37,23 @@ FirefoxOSGenerator.prototype.askFor = function askFor() {
 
   var prompts = [{
     name: 'appName',
-    message: 'What do you want to call your app?',
+    message: 'What do you want to call your app',
     default: 'My Firefox OS App'
-  },{
+  }, {
     name: 'devUserName',
-    message: 'What is your Github username?',
+    message: 'What is your Github username',
     default: 'rick-astley'
+  }, {
+    type: 'confirm',
+    name: 'shallUseGaiaBB',
+    message: 'Include Gaia\'s Building Blocks (default: ' + 'YES'.bold + ')',
+    default: true
   }];
 
-  this.prompt(prompts, function (err, props) {
-    if (err) {
-      return this.emit('error', err);
-    }
-
+  this.prompt(prompts, function (props) {
     this.appName = props.appName;
     this.devUserName = props.devUserName;
+    this.shallUseGaiaBB = props.shallUseGaiaBB;
 
     cb();
   }.bind(this));
@@ -101,8 +103,10 @@ FirefoxOSGenerator.prototype.app = function app() {
   this.copy('test/lib/chai.js', 'test/lib/chai.js');
 
   // copy gaia's BB
-  this.mkdir('app/styles/gaiabb');
-  this._copyGaiaBB('app/styles/gaiabb');
+  if (this.shallUseGaiaBB) {
+    this.mkdir('app/styles/gaiabb');
+    this._copyGaiaBB('app/styles/gaiabb');
+  }
 };
 
 FirefoxOSGenerator.prototype.projectfiles = function projectfiles() {
