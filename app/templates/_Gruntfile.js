@@ -4,14 +4,14 @@ var mountFolder = function (connect, dir) {
 };
 
 module.exports = function (grunt) {
-  [
+  [<% if (shallUseGaiaBB) { %>
+    'grunt-contrib-cssmin',<% } %>
     'grunt-contrib-clean',
     'grunt-contrib-copy',
     'grunt-contrib-jshint',
     'grunt-contrib-sass',
     'grunt-contrib-watch',
     'grunt-contrib-connect',
-    'grunt-contrib-cssmin',
     'grunt-mocha'
   ].forEach(grunt.loadNpmTasks);
 
@@ -58,7 +58,7 @@ module.exports = function (grunt) {
         files: sassFiles
       }
     },
-
+<% if (shallUseGaiaBB) { %>
     // CSS min config -> for concatenating Gaia BB's
     cssmin: {
       gaiabb: {
@@ -68,16 +68,16 @@ module.exports = function (grunt) {
         }
       }
     },
-
+<% } %>
     // watch config
-    watch: {
-      sass: {
-        files: ['app/styles/**/*.{scss,sass}'],
-        tasks: ['sass:dev']
-      },
+    watch: {<% if (shallUseGaiaBB) { %>
       gaiabb: {
         files: ['app/styles/gaiabb/**/*.css', '!app/styles/gaiabb/all.css'],
         tasks: ['cssmin']
+      },<% } %>
+      sass: {
+        files: ['app/styles/**/*.{scss,sass}'],
+        tasks: ['sass:dev']
       }
     },
 
@@ -121,8 +121,15 @@ module.exports = function (grunt) {
 
     // clean config
     clean: {
-      build: ['build', '.tmp', 'app/styles/gaiabb/all.css'],
-      server: ['.tmp', 'app/styles/gaiabb/all.css']
+      build: [<% if (shallUseGaiaBB) { %>
+        'app/styles/gaiabb/all.css',<% } %>
+        'build',
+        '.tmp'
+      ],
+      server: [<% if (shallUseGaiaBB) { %>
+        'app/styles/gaiabb/all.css',<% } %>
+        '.tmp'
+      ]
     },
 
     // copy config
@@ -132,14 +139,14 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: 'app',
-          src: [
+          src: [<% if (shallUseGaiaBB) { %>
+            '!styles/gaiabb/**/*.css',
+            'styles/gaiabb/all.css',
+            'styles/gaiabb/**/*.{png,gif,jpg,jpeg}',<% } %>
             'scripts/**/*.js',
             'icons/**/*.{png,jpg,jpeg}',
             'images/**/*.{png,gif,jpg,jpeg}',
             'styles/**/*.css',
-            '!styles/gaiabb/**/*.css',
-            'styles/gaiabb/all.css',
-            'styles/gaiabb/**/*.{png,gif,jpg,jpeg}',
             '*.html',
             'manifest.webapp'
           ],
@@ -159,11 +166,11 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('build', 'Build app release', [
+  grunt.registerTask('build', 'Build app release', [<% if (shallUseGaiaBB) { %>
+    'cssmin',<% } %>
     'jshint',
     'clean:build',
     'sass:release',
-    'cssmin',
     'copy:build',
     'copy:sass'
   ]);
@@ -186,11 +193,11 @@ module.exports = function (grunt) {
       ]);
     }
     else {
-      grunt.task.run([
+      grunt.task.run([<% if (shallUseGaiaBB) { %>
+        'cssmin',<% } %>
         'jshint',
         'clean:server',
         'sass:dev',
-        'cssmin',
         'connect:server',
         'watch'
       ]);

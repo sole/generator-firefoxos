@@ -111,7 +111,7 @@ FirefoxOSGenerator.prototype.app = function app() {
 
 FirefoxOSGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('package.json', 'package.json');
-  this.copy('Gruntfile.js', 'Gruntfile.js');
+  this.copy('_Gruntfile.js', 'Gruntfile.js');
   this.copy('jshintrc', '.jshintrc');
   this.copy('_README.md', 'README.md');
 };
