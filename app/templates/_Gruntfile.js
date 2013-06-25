@@ -139,14 +139,14 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: 'app',
-          src: [<% if (shallUseGaiaBB) { %>
+          src: [
+            'styles/**/*.css',<% if (shallUseGaiaBB) { %>
             '!styles/gaiabb/**/*.css',
             'styles/gaiabb/all.css',
             'styles/gaiabb/**/*.{png,gif,jpg,jpeg}',<% } %>
             'scripts/**/*.js',
             'icons/**/*.{png,jpg,jpeg}',
             'images/**/*.{png,gif,jpg,jpeg}',
-            'styles/**/*.css',
             '*.html',
             'manifest.webapp'
           ],
@@ -157,7 +157,8 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '.tmp',
-          src: [
+          src: [<% if (shallUseGaiaBB) { %>
+            '!styles/gaiabb/**/*.css',<% } %>
             'styles/**/*.css'
           ],
           dest: 'build'
@@ -166,10 +167,10 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('build', 'Build app release', [<% if (shallUseGaiaBB) { %>
-    'cssmin',<% } %>
+  grunt.registerTask('build', 'Build app release', [
     'jshint',
-    'clean:build',
+    'clean:build',<% if (shallUseGaiaBB) { %>
+    'cssmin',<% } %>
     'sass:release',
     'copy:build',
     'copy:sass'
@@ -193,10 +194,10 @@ module.exports = function (grunt) {
       ]);
     }
     else {
-      grunt.task.run([<% if (shallUseGaiaBB) { %>
-        'cssmin',<% } %>
+      grunt.task.run([
         'jshint',
-        'clean:server',
+        'clean:server',<% if (shallUseGaiaBB) { %>
+        'cssmin',<% } %>
         'sass:dev',
         'connect:server',
         'watch'
