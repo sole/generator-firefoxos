@@ -61,17 +61,24 @@ FirefoxOSGenerator.prototype.askFor = function askFor() {
 
 FirefoxOSGenerator.prototype._copyGaiaBB = function (dst) {
   var done = this.async();
+  var _this = this;
 
   console.log('Gaia repository will now be downloaded.\nDepending on your' +
               'connection, this will probably take a while.\n' +
               'Don\'t panic!'.yellow);
 
-  this.remote('mozilla-b2g', 'gaia', function (err, remote) {
+  var bbSrc = 'https://github.com/buildingfirefoxos/' +
+    'Building-Blocks/archive/gh-pages.tar.gz';
+
+  this.tarball(bbSrc, '.tmp/bb/', function (err) {
     if (err) {
-      console.log('Error fetching Gaia');
+      console.log('Error fetching Gaia Building Blocks'.red);
     }
     else {
-      remote.directory('shared/style', dst);
+      var root = _this.sourceRoot();
+      _this.sourceRoot(process.cwd());
+      _this.directory('.tmp/bb/style', dst);
+      _this.sourceRoot(root);
     }
     done();
   });
