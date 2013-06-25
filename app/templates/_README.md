@@ -42,6 +42,7 @@ This task will:
   - Clean temporary directories
   - Run JSHint.
   - Compile SASS files.
+  - Minify all Gaia's Building Blocks in one single CSS file'.
   - Build the app into `build`.
   - Run a server in [0.0.0.0:9000](http://0.0.0.0:9000)
   - Watch for changes in Sass, HTML and JavaScript files and copy
@@ -57,14 +58,16 @@ This task will:
 
 - Run JSHint.
 - Compile SASS files.
+- Minify all Gaia's Building Blocks in one single CSS file'.
 - Copy all the app files to `build`
 
 ### Clean temporary files
 
-Some tasks create temporary directories to copy files. These are:
+Some tasks create temporary directories or minified files. These are:
 
 - `app/.tmp`
 - `build`
+- `app/styles/gaiabb/all.css`
 
 You can wipe them out with:
 
