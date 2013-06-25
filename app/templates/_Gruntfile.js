@@ -111,7 +111,7 @@ module.exports = function (grunt) {
     mocha: {
       all: {
         options: {
-          urls: ['http://0.0.0.0:<%= connect.test.options.port %>/index.html'],
+          urls: ['http://0.0.0.0:9002/index.html'],
           bail: true,
           reporter: 'Spec',
           run: true

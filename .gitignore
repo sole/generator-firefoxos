@@ -1,3 +1,9 @@
 node_modules
 .DS_Store
+app/templates/.jshintrc
+app/templates/Gruntfile.js
+app/templates/app/index.html
+app/templates/README.md
+app/templates/.tmp
+app/templates/app/styles/gaiabb
 
