@@ -119,7 +119,7 @@ FirefoxOSGenerator.prototype.app = function app() {
   this.copy('app/icons/120x120.png', 'app/icons/120x120.png');
   this.copy('app/icons/128x128.png', 'app/icons/128x128.png');
   this.copy('app/icons/60x60.png', 'app/icons/60x60.png');
-  this.copy('app/styles/main.sass', 'app/styles/main.sass');
+  this.copy('app/styles/_main.sass', 'app/styles/main.sass');
   if (!this.shallUseFramework) {
     this.copy('app/scripts/main_simple.js', 'app/scripts/main.js');
     this.copy('app/_index_simple.html', 'app/index.html');

@@ -290,12 +290,14 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('log', 'Outputs FF OS device\'s log', ['ffoslog']);
-  grunt.registerTask('reset', 'Resets FF OS device', ['ffosreset']);
-  grunt.registerTask('push', 'Installs the app in the FF OS device', [
-    'release',
-    'ffospush:app',
-    'ffosreset'
-  ]);
+  grunt.registerTask('reset', 'Resets B2G', ['ffosreset']);
+  grunt.registerTask('push', 'Installs the app in the device', function () {
+    grunt.task.run([
+      'release',
+      'ffospush:app',
+      'ffosreset'
+    ]);
+  });
 
   grunt.registerTask('default', 'Default task', [
     'jshint'

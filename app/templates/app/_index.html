@@ -2,13 +2,22 @@
 <html>
   <head>
     <title><%= appName %></title>
-    <meta charset="utf-8">
-    <% if (shallUseGaiaBB) { %><link href="/styles/gaiabb/all.css" rel="stylesheet" type="text/css"><% } %>
+    <meta charset="utf-8"><% if (shallUseGaiaBB) { %>
+    <link href="/styles/gaiabb/all.css" rel="stylesheet" type="text/css"><% } %>
     <link href="/styles/main.css" rel="stylesheet" type="text/css">
-  </head>
+  </head><% if (shallUseGaiaBB) { %>
+  <body role="application">
+    <section role="region">
+      <header>
+        <h1><%= appName %></h1>
+      </header>
+      <p id="hello"></p>
+    </section>
+  <% } else { %>
   <body>
     <h1><%= appName %></h1>
     <p id="hello"></p>
+  <% } %>
     <script data-main="scripts/main" src="components/requirejs/require.js">
     </script>
   </body>

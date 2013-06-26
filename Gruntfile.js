@@ -23,7 +23,8 @@ module.exports = function (grunt) {
           'app/templates/app/index.html': 'app/templates/app/_index.html',
           'app/templates/.jshintrc': 'app/templates/jshintrc',
           'app/templates/app/manifest.webapp': 'app/templates/app/_manifest.webapp',
-          'app/templates/.bowerrc': 'app/templates/bowerrc'
+          'app/templates/.bowerrc': 'app/templates/bowerrc',
+          'app/templates/app/styles/main.sass': 'app/templates/app/styles/_main.sass'
         },
         options: {
           processContent: function (content) {
@@ -41,6 +42,7 @@ module.exports = function (grunt) {
             'app/templates/app/index.html',
             'app/templates/.jshintrc',
             'app/templates/app/manifest.webapp',
+            'app/templates/app/styles/main.sass',
             'app/templates/.bowerrc'],
       release: ['app/templates/node_modules',
                 'app/templates/build',
