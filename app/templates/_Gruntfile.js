@@ -5,7 +5,8 @@ var mountFolder = function (connect, dir) {
 
 module.exports = function (grunt) {
   [<% if (shallUseGaiaBB) { %>
-    'grunt-contrib-cssmin',<% } %>
+    'grunt-contrib-cssmin',<% } %><% if (shallUseFramework) { %>
+    'grunt-contrib-handlebars',<% } %>
     'grunt-contrib-clean',
     'grunt-contrib-copy',
     'grunt-contrib-jshint',
@@ -13,18 +14,17 @@ module.exports = function (grunt) {
     'grunt-contrib-watch',
     'grunt-contrib-connect',
     'grunt-contrib-compress',
-    'grunt-contrib-handlebars',
     'grunt-mocha',
     'grunt-firefoxos'
   ].forEach(grunt.loadNpmTasks);
 
   // add here the libs you install with bower
-  var bowerFiles = [
+  var bowerFiles = [<% if (shallUseFramework) { %>
     'requirejs/require.js',
     'backbone/backbone-min.js',
     'zepto/zepto.min.js',
     'underscore/underscore-min.js',
-    'handlebars.js/dist/handlebars.runtime.js'
+    'handlebars.js/dist/handlebars.runtime.js'<% } %>
   ];
 
   var sassFiles = [{
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
         }
       }
     },
-<% } %>
+<% } %><% if (shallUseFramework) { %>
     // handlebars config
     handlebars: {
       compile: {
@@ -100,20 +100,20 @@ module.exports = function (grunt) {
         }
       }
     },
-
+<% } %>
     // watch config
     watch: {<% if (shallUseGaiaBB) { %>
       gaiabb: {
         files: ['app/styles/gaiabb/**/*.css', '!app/styles/gaiabb/all.css'],
         tasks: ['cssmin']
+      },<% } %><% if (shallUseFramework) { %>
+      handlebars: {
+        files: ['app/templates/*.hbs'],
+        tasks: ['handlebars:compile']
       },<% } %>
       sass: {
         files: ['app/styles/**/*.{scss,sass}'],
         tasks: ['sass:dev']
-      },
-      handlebars: {
-        files: ['app/templates/*.hbs'],
-        tasks: ['handlebars:compile']
       }
     },
 
@@ -170,7 +170,15 @@ module.exports = function (grunt) {
     },
 
     // copy config
-    copy: {
+    copy: {<% if (shallUseFramework) { %>
+      handlebars: {
+        files: [{
+          expand: true,
+          cwd: '.tmp',
+          dest: 'build',
+          src: ['scripts/templates.js']
+        }]
+      },<% } %>
       build: {
         files: [{
           expand: true,
@@ -205,14 +213,6 @@ module.exports = function (grunt) {
           ],
           dest: 'build'
         }]
-      },
-      handlebars: {
-        files: [{
-          expand: true,
-          cwd: '.tmp',
-          dest: 'build',
-          src: ['scripts/templates.js']
-        }]
       }
     },
 
@@ -243,11 +243,11 @@ module.exports = function (grunt) {
     'jshint',
     'clean:build',<% if (shallUseGaiaBB) { %>
     'cssmin',<% } %>
-    'sass:release',
+    'sass:release',<% if (shallUseFramework) { %>
     'handlebars:compile',
+    'copy:handlebars',<% } %>
     'copy:build',
-    'copy:sass',
-    'copy:handlebars'
+    'copy:sass'
   ]);
 
   grunt.registerTask('release', 'Creates a zip with an app build', [
@@ -258,9 +258,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', 'Launch tests in shell with PhantomJS', [
     'jshint',
-    'clean:server',
-    'sass:dev',
-    'handlebars:compile',
+    'clean:server',<% if (shallUseGaiaBB) { %>
+    'cssmin',<% } %>
+    'sass:dev',<% if (shallUseFramework) { %>
+    'handlebars:compile',<% } %>
     'connect:test',
     'mocha'
   ]);
@@ -270,8 +271,8 @@ module.exports = function (grunt) {
       grunt.task.run([
         'jshint',
         'clean:server',
-        'sass:dev',
-        'handlebars:compile',
+        'sass:dev',<% if (shallUseFramework) { %>
+        'handlebars:compile',<% } %>
         'connect:test:keepalive'
       ]);
     }
@@ -280,8 +281,8 @@ module.exports = function (grunt) {
         'jshint',
         'clean:server',<% if (shallUseGaiaBB) { %>
         'cssmin',<% } %>
-        'sass:dev',
-        'handlebars:compile',
+        'sass:dev',<% if (shallUseFramework) { %>
+        'handlebars:compile',<% } %>
         'connect:server',
         'watch'
       ]);
@@ -292,7 +293,8 @@ module.exports = function (grunt) {
   grunt.registerTask('reset', 'Resets FF OS device', ['ffosreset']);
   grunt.registerTask('push', 'Installs the app in the FF OS device', [
     'release',
-    'ffospush:app'
+    'ffospush:app',
+    'ffosreset'
   ]);
 
   grunt.registerTask('default', 'Default task', [

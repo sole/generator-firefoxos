@@ -6,11 +6,10 @@ This project uses [Grunt](http://www.gruntjs.com) for automation. Custom
 tasks can be added to `Gruntfile.js`. Below are some examples.
 tasks.
 
-**Deploy the app for the first time to the phone**:
+**Deploy the app to the phone**:
 
 ```bash
 $ grunt push
-$ grunt reset
 ```
 
 **Run the tests**:
@@ -105,7 +104,10 @@ This task will:
 
 ### Firefox OS tasks
 
-There are several tasks to manage the Firefox OS device. 
+There are several tasks to manage the Firefox OS device. You will need
+**to enable the `Remote debugging`** option in your phone to use these
+tasks. You can do this in the `Settings` app and then: `Device
+information > More Information > Developer`.
 
 #### Install the app
 
@@ -113,20 +115,15 @@ This will:
 
 - Build a release in `application.zip`
 - Push `applicatin.zip` to the phone
+- Reset the B2G process
 
 ```bash
 $ grunt push
 ```
 
-**The first time that you push the app to the device, you will need to
-reset B2G** in order for it to show up in the Home Screen.
-
-```bash
-$ grunt push
-$ grunt reset
-```
-
-Subsequent pushes will not need this reset.
+A prompt will appear in your phone asking if you want to establish
+a connection. **Your phone will need to be unlocked** for this to show
+up.
 
 #### Reboot B2G
 

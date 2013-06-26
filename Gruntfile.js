@@ -10,7 +10,8 @@ module.exports = function (grunt) {
   var templateVars = {
     appName: 'Waka waka',
     devUserName: 'darth-vader',
-    shallUseGaiaBB: true
+    shallUseGaiaBB: true,
+    shallUseFramework: true
   };
 
   grunt.initConfig({
@@ -43,6 +44,7 @@ module.exports = function (grunt) {
             'app/templates/.bowerrc'],
       release: ['app/templates/node_modules',
                 'app/templates/build',
+                'app/scripts/components',
                 'app/templates/application.zip']
     },
 
