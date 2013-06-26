@@ -1,5 +1,30 @@
 # <%= appName %>
 
+## Getting started
+
+This project uses [Grunt](http://www.gruntjs.com) for automation. Custom
+tasks can be added to `Gruntfile.js`. Below are some examples.
+tasks.
+
+**Deploy the app for the first time to the phone**:
+
+```bash
+$ grunt push
+$ grunt reset
+```
+
+**Run the tests**:
+
+```bash
+$ grunt test
+```
+
+**Launch a local server**:
+
+```bash
+$ grunt server
+```
+
 ## Grunt tasks
 
 ### Run JSHint

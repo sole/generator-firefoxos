@@ -6,4 +6,5 @@ app/templates/app/index.html
 app/templates/README.md
 app/templates/.tmp
 app/templates/app/styles/gaiabb
+app/templates/app/manifest.webapp
 
