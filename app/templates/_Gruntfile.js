@@ -17,6 +17,15 @@ module.exports = function (grunt) {
     'grunt-firefoxos'
   ].forEach(grunt.loadNpmTasks);
 
+  // add here the libs you install with bower
+  var bowerFiles = [
+    'requirejs/require.js',
+    'backbone/backbone-min.js',
+    'zepto/zepto.min.js',
+    'underscore/underscore-min.js',
+    'handlebars.js/dist/handlebars.runtime.js'
+  ];
+
   var sassFiles = [{
     expand: true,
     cwd: 'app/styles/',
@@ -153,6 +162,11 @@ module.exports = function (grunt) {
             '*.html',
             'manifest.webapp'
           ],
+          dest: 'build'
+        }, {
+          expand: true,
+          cwd: 'app',
+          src: bowerFiles.map(function (x) { return 'components/' + x; }),
           dest: 'build'
         }]
       },

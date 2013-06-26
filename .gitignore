@@ -7,4 +7,7 @@ app/templates/README.md
 app/templates/.tmp
 app/templates/app/styles/gaiabb
 app/templates/app/manifest.webapp
+app/templates/build
+app/templates/.bowerrc
+app/templates/app/components
 

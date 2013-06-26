@@ -121,5 +121,7 @@ FirefoxOSGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('_Gruntfile.js', 'Gruntfile.js');
   this.copy('jshintrc', '.jshintrc');
   this.copy('_README.md', 'README.md');
+  this.copy('bowerrc', '.bowerrc');
+  this.copy('bower.json', 'bower.json');
 };
 
