@@ -10,4 +10,5 @@ app/templates/app/manifest.webapp
 app/templates/build
 app/templates/.bowerrc
 app/templates/app/components
+application.zip
 

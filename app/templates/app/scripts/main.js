@@ -24,7 +24,11 @@ require.config({
 });
 
 require([
-  'backbone'
-], function () {
+  'backbone',
+  'router'
+], function (Backbone, Router) {
   'use strict';
+
+  new Router();
+  Backbone.history.start();
 });

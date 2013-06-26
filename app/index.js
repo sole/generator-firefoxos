@@ -93,11 +93,11 @@ FirefoxOSGenerator.prototype.app = function app() {
   this.mkdir('app/images');
   this.mkdir('app/styles');
   this.copy('app/_manifest.webapp', 'app/manifest.webapp');
-  this.copy('app/_index.html', 'app/index.html');
+  this.copy('app/_index_simple.html', 'app/index.html');
   this.copy('app/icons/120x120.png', 'app/icons/120x120.png');
   this.copy('app/icons/128x128.png', 'app/icons/128x128.png');
   this.copy('app/icons/60x60.png', 'app/icons/60x60.png');
-  this.copy('app/scripts/main.js', 'app/scripts/main.js');
+  this.copy('app/scripts/main_simple.js', 'app/scripts/main.js');
   this.copy('app/styles/main.sass', 'app/styles/main.sass');
 
   // test framework
@@ -108,6 +108,19 @@ FirefoxOSGenerator.prototype.app = function app() {
   this.copy('test/lib/mocha.css', 'test/lib/mocha.css');
   this.copy('test/lib/sinon.js', 'test/lib/sinon.js');
   this.copy('test/lib/chai.js', 'test/lib/chai.js');
+
+  // backbone + require
+  this.mkdir('app/scripts/templates');
+  this.mkdir('app/scripts/views');
+  this.mkdir('app/scripts/models');
+  this.mkdir('app/scripts/collections');
+  this.copy('bower.json', 'bower.json');
+  this.copy('app/scripts/main.js', 'app/scripts/main.js');
+  this.copy('app/_index.html', 'app/index.html');
+  this.copy('app/scripts/router.js', 'app/scripts/router.js');
+  this.copy('app/scripts/views/hello.js', 'app/scripts/views/hello.js');
+  this.copy('app/scripts/templates/hello.hbs',
+            'app/scripts/templates/hello.hbs');
 
   // copy gaia's BB
   if (this.shallUseGaiaBB) {
@@ -122,6 +135,5 @@ FirefoxOSGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('jshintrc', '.jshintrc');
   this.copy('_README.md', 'README.md');
   this.copy('bowerrc', '.bowerrc');
-  this.copy('bower.json', 'bower.json');
 };
 

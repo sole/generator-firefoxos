@@ -13,6 +13,7 @@ module.exports = function (grunt) {
     'grunt-contrib-watch',
     'grunt-contrib-connect',
     'grunt-contrib-compress',
+    'grunt-contrib-handlebars',
     'grunt-mocha',
     'grunt-firefoxos'
   ].forEach(grunt.loadNpmTasks);
@@ -80,6 +81,26 @@ module.exports = function (grunt) {
       }
     },
 <% } %>
+    // handlebars config
+    handlebars: {
+      compile: {
+        files: {
+          '.tmp/scripts/templates.js': [
+            'app/scripts/templates/*.hbs'
+          ]
+        },
+        options: {
+          namespace: 'Handlebars.templates',
+          amd: true,
+          processName: function (filename) {
+            return filename
+              .replace('app/scripts/templates/', '')
+              .replace('.hbs', '');
+          }
+        }
+      }
+    },
+
     // watch config
     watch: {<% if (shallUseGaiaBB) { %>
       gaiabb: {
@@ -89,6 +110,10 @@ module.exports = function (grunt) {
       sass: {
         files: ['app/styles/**/*.{scss,sass}'],
         tasks: ['sass:dev']
+      },
+      handlebars: {
+        files: ['app/templates/*.hbs'],
+        tasks: ['handlebars:compile']
       }
     },
 
@@ -180,9 +205,18 @@ module.exports = function (grunt) {
           ],
           dest: 'build'
         }]
+      },
+      handlebars: {
+        files: [{
+          expand: true,
+          cwd: '.tmp',
+          dest: 'build',
+          src: ['scripts/templates.js']
+        }]
       }
     },
 
+    // Firefox OS push config
     ffospush: {
       app: {
         appId: '<%= _.slugify(appName) %>',
@@ -190,6 +224,7 @@ module.exports = function (grunt) {
       }
     },
 
+    // compress (zip a file for release) config
     compress: {
       release: {
         options: {
@@ -209,8 +244,10 @@ module.exports = function (grunt) {
     'clean:build',<% if (shallUseGaiaBB) { %>
     'cssmin',<% } %>
     'sass:release',
+    'handlebars:compile',
     'copy:build',
-    'copy:sass'
+    'copy:sass',
+    'copy:handlebars'
   ]);
 
   grunt.registerTask('release', 'Creates a zip with an app build', [
@@ -223,6 +260,7 @@ module.exports = function (grunt) {
     'jshint',
     'clean:server',
     'sass:dev',
+    'handlebars:compile',
     'connect:test',
     'mocha'
   ]);
@@ -233,6 +271,7 @@ module.exports = function (grunt) {
         'jshint',
         'clean:server',
         'sass:dev',
+        'handlebars:compile',
         'connect:test:keepalive'
       ]);
     }
@@ -242,6 +281,7 @@ module.exports = function (grunt) {
         'clean:server',<% if (shallUseGaiaBB) { %>
         'cssmin',<% } %>
         'sass:dev',
+        'handlebars:compile',
         'connect:server',
         'watch'
       ]);
