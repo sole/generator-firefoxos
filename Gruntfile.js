@@ -20,7 +20,8 @@ module.exports = function (grunt) {
           'app/templates/Gruntfile.js': 'app/templates/_Gruntfile.js',
           'app/templates/README.md': 'app/templates/_README.md',
           'app/templates/app/index.html': 'app/templates/app/_index.html',
-          'app/templates/.jshintrc': 'app/templates/jshintrc'
+          'app/templates/.jshintrc': 'app/templates/jshintrc',
+          'app/templates/app/manifest.webapp': 'app/templates/app/_manifest.webapp',
         },
         options: {
           processContent: function (content) {
@@ -36,7 +37,11 @@ module.exports = function (grunt) {
       all: ['app/templates/Gruntfile.js',
             'app/templates/README.md',
             'app/templates/app/index.html',
-            'app/templates/.jshintrc']
+            'app/templates/.jshintrc',
+            'app/templates/app/manifest.webapp'],
+      release: ['app/templates/node_modules',
+                'app/templates/build',
+                'app/templates/application.zip']
     },
 
     watch: {
@@ -49,5 +54,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['clean:all', 'copy:all', 'watch']);
   grunt.registerTask('compile', 'copy:all');
+  grunt.registerTask('release', ['clean:all', 'clean:release']);
 }
 

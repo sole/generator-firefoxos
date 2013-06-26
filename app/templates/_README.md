@@ -21,7 +21,7 @@ You can run JSHint on all JavaScript files in `scripts` (and
 subdirectories) with:
 
 ```bash
-grunt jshint
+$ grunt jshint
 ```
 
 **Note**: Sometimes you will need to include 3rd-party code that do not
@@ -34,7 +34,7 @@ You can launch a HTTP server, with `/` pointing at the app's `build`
 directory.
 
 ```bash
-grunt server
+$ grunt server
 ```
 
 This task will:
@@ -57,9 +57,67 @@ app.
 This task will:
 
 - Run JSHint.
+- Clean build temporary files.
 - Compile SASS files.
 - Minify all Gaia's Building Blocks in one single CSS file'.
 - Copy all the app files to `build`
+
+
+### Zip a release
+
+The way to distribute a packaged Firefox OS app is to get a zip file
+with the build. You can do this with the `release` task.
+
+```bash
+$ grunt release
+```
+
+This task will:
+
+- Delete any previous release's zip.
+- Build the app.
+- Zip an `application.zip` file with the `build` directory.
+
+### Firefox OS tasks
+
+There are several tasks to manage the Firefox OS device. 
+
+#### Install the app
+
+This will:
+
+- Build a release in `application.zip`
+- Push `applicatin.zip` to the phone
+
+```bash
+$ grunt push
+```
+
+**The first time that you push the app to the device, you will need to
+reset B2G** in order for it to show up in the Home Screen.
+
+```bash
+$ grunt push
+$ grunt reset
+```
+
+Subsequent pushes will not need this reset.
+
+#### Reboot B2G
+
+When things go wrong, you might need to reboot the Boot2Gecko process:
+
+```bash
+$ grunt reset
+```
+
+#### Output the log
+
+This will output the device's log into the console:
+
+```bash
+$ grunt log
+```
 
 ### Clean temporary files
 
@@ -68,11 +126,12 @@ Some tasks create temporary directories or minified files. These are:
 - `app/.tmp`
 - `build`
 - `app/styles/gaiabb/all.css`
+- `application.zip`
 
 You can wipe them out with:
 
 ```bash
-grunt clean
+$ grunt clean
 ```
 
 Note that this will also delete Sass' cache files, that are being stored
@@ -87,14 +146,14 @@ and [Chai](http://www.chaijs.com/) for the expectations.
 You can run tests in the shell with:
 
 ```bash
-grunt test
+$ grunt test
 ```
 
 This will use PhantomJS as web browser, which is webkit-based. You
 probably want to run your tests in a Firefox Nightly browser with:
 
 ```bash
-grunt server:test
+$ grunt server:test
 ```
 
 This will start a web server in [0.0.0.0:9002](0.0.0.0:9002) with your

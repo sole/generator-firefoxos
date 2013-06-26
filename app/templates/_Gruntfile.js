@@ -12,7 +12,9 @@ module.exports = function (grunt) {
     'grunt-contrib-sass',
     'grunt-contrib-watch',
     'grunt-contrib-connect',
-    'grunt-mocha'
+    'grunt-contrib-compress',
+    'grunt-mocha',
+    'grunt-firefoxos'
   ].forEach(grunt.loadNpmTasks);
 
   var sassFiles = [{
@@ -121,6 +123,7 @@ module.exports = function (grunt) {
 
     // clean config
     clean: {
+      release: ['application.zip'],
       build: [<% if (shallUseGaiaBB) { %>
         'app/styles/gaiabb/all.css',<% } %>
         'build',
@@ -164,16 +167,42 @@ module.exports = function (grunt) {
           dest: 'build'
         }]
       }
+    },
+
+    ffospush: {
+      app: {
+        appId: '<%= _.slugify(appName) %>',
+        zip: 'application.zip'
+      }
+    },
+
+    compress: {
+      release: {
+        options: {
+          archive: 'application.zip',
+        },
+        files: [{
+          cwd: 'build',
+          expand: true,
+          src: '**/*'
+        }]
+      }
     }
   });
 
-  grunt.registerTask('build', 'Build app release', [
+  grunt.registerTask('build', 'Build app for release', [
     'jshint',
     'clean:build',<% if (shallUseGaiaBB) { %>
     'cssmin',<% } %>
     'sass:release',
     'copy:build',
     'copy:sass'
+  ]);
+
+  grunt.registerTask('release', 'Creates a zip with an app build', [
+    'build',
+    'clean:release',
+    'compress:release'
   ]);
 
   grunt.registerTask('test', 'Launch tests in shell with PhantomJS', [
@@ -204,6 +233,13 @@ module.exports = function (grunt) {
       ]);
     }
   });
+
+  grunt.registerTask('log', 'Outputs FF OS device\'s log', ['ffoslog']);
+  grunt.registerTask('reset', 'Resets FF OS device', ['ffosreset']);
+  grunt.registerTask('push', 'Installs the app in the FF OS device', [
+    'release',
+    'ffospush:app'
+  ]);
 
   grunt.registerTask('default', 'Default task', [
     'jshint'
