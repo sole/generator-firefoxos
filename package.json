@@ -19,7 +19,7 @@
     "url": "https://github.com/pdi-innovation/generator-firefoxos.git"
   },
   "dependencies": {
-    "yeoman-generator": "~0.12.1",
+    "yeoman-generator": "~0.12.1"
   },
   "engines": {
     "node": ">=0.8.0"
