@@ -294,8 +294,7 @@ module.exports = function (grunt) {
   grunt.registerTask('push', 'Installs the app in the device', function () {
     grunt.task.run([
       'release',
-      'ffospush:app',
-      'ffosreset'
+      'ffospush:app'
     ]);
   });
 

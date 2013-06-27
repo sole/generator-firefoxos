@@ -3,14 +3,7 @@
 ## Getting started
 
 This project uses [Grunt](http://www.gruntjs.com) for automation. Custom
-tasks can be added to `Gruntfile.js`. Below are some examples.
-tasks.
-
-**Deploy the app to the phone**:
-
-```bash
-$ grunt push
-```
+tasks can be added to `Gruntfile.js`. Here are some examples:
 
 **Run the tests**:
 
@@ -18,10 +11,23 @@ $ grunt push
 $ grunt test
 ```
 
-**Launch a local server**:
+**Launch a local server** so you can try the app in a desktop browser:
 
 ```bash
 $ grunt server
+```
+
+**Deploy the app to the phone for the first time**:
+
+```bash
+$ grunt push
+$ grunt reset
+```
+
+**Subsequent deploys to the phone**:
+
+```bash
+$ grunt push
 ```
 
 ## Grunt tasks
@@ -124,6 +130,14 @@ $ grunt push
 A prompt will appear in your phone asking if you want to establish
 a connection. **Your phone will need to be unlocked** for this to show
 up.
+
+**NOTE:** When you install the app for the first time, you will need to
+do a B2G reset for it to appear in the homescreen.
+
+```bash
+$ grunt push
+$ grunt reset
+```
 
 #### Reboot B2G
 
