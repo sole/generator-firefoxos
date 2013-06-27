@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <title>Mocha tests</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/lib/mocha.css">
+
+  <!-- include mocha + chai + sinon -->
+  <script src="/lib/mocha.js" type="text/javascript"></script>
+  <script src="/lib/chai.js" type="text/javascript"></script>
+  <script src="/lib/sinon.js" type="text/javascript"></script>
+</head>
+<body>
+  <!-- required for browser reporter -->
+  <div id="mocha"></div>
+
+  <!-- include require -->
+  <script src="components/requirejs/require.js"></script>
+  <script type="text/javascript">
+    mocha.setup('bdd');
+    mocha.globals([ // acceptable globals
+      'Backbone',
+      '$',
+      '_',
+      'Handlebars'
+    ]);
+  </script>
+
+  <script type="text/javascript">
+  require([
+    'main',
+    // include spec files here
+    'spec/sample'
+  ], function () {
+    mocha.run(); // run the tests with mocha
+  });
+  </script>
+</body>
+</html>
+

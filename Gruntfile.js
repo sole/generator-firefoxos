@@ -20,11 +20,16 @@ module.exports = function (grunt) {
         files: {
           'app/templates/Gruntfile.js': 'app/templates/_Gruntfile.js',
           'app/templates/README.md': 'app/templates/_README.md',
-          'app/templates/app/index.html': 'app/templates/app/_index.html',
+          'app/templates/app/index.html':
+             'app/templates/app/_index.html',
           'app/templates/.jshintrc': 'app/templates/jshintrc',
-          'app/templates/app/manifest.webapp': 'app/templates/app/_manifest.webapp',
+          'app/templates/app/manifest.webapp':
+              'app/templates/app/_manifest.webapp',
           'app/templates/.bowerrc': 'app/templates/bowerrc',
-          'app/templates/app/styles/main.sass': 'app/templates/app/styles/_main.sass'
+          'app/templates/app/styles/main.sass':
+            'app/templates/app/styles/_main.sass',
+          'app/templates/test/index.html':
+            'app/templates/test/_index.html'
         },
         options: {
           processContent: function (content) {
@@ -43,7 +48,8 @@ module.exports = function (grunt) {
             'app/templates/.jshintrc',
             'app/templates/app/manifest.webapp',
             'app/templates/app/styles/main.sass',
-            'app/templates/.bowerrc'],
+            'app/templates/.bowerrc',
+            'app/templates/test/index.html'],
       release: ['app/templates/node_modules',
                 'app/templates/build',
                 'app/scripts/components',

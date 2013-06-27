@@ -2,6 +2,7 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
+var fs = require('fs');
 
 
 var FirefoxOSGenerator = module.exports = function FirefoxOSGenerator(
@@ -128,11 +129,25 @@ FirefoxOSGenerator.prototype.app = function app() {
   // test framework
   this.mkdir('test');
   this.mkdir('test/lib');
-  this.copy('test/index.html', 'test/index.html');
+  this.mkdir('test/spec');
   this.copy('test/lib/mocha.js', 'test/lib/mocha.js');
   this.copy('test/lib/mocha.css', 'test/lib/mocha.css');
   this.copy('test/lib/sinon.js', 'test/lib/sinon.js');
   this.copy('test/lib/chai.js', 'test/lib/chai.js');
+  fs.symlinkSync('../app/scripts',
+                 'test/scripts',
+                 'dir');
+  if (this.shallUseFramework) {
+    this.copy('test/main.js', 'test/main.js');
+    this.copy('test/_index.html', 'test/index.html');
+    this.copy('test/spec/sample.js', 'test/spec/sample.js');
+    fs.symlinkSync('../app/components',
+                   'test/components',
+                   'dir');
+  }
+  else {
+    this.copy('test/_index_simple.html', 'test/index.html');
+  }
 
   if (this.shallUseFramework) {
     this._copyAppFramework();

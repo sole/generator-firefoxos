@@ -146,11 +146,11 @@ module.exports = function (grunt) {
     // mocha (test) config
     mocha: {
       all: {
-        options: {
+        options: {<% if (!shallUseFramework) { %>
+          run: true,<% } %>
           urls: ['http://0.0.0.0:9002/index.html'],
           bail: true,
-          reporter: 'Spec',
-          run: true
+          reporter: 'Spec'
         }
       }
     },

@@ -11,5 +11,9 @@ app/templates/app/styles/main.sass
 app/templates/build
 app/templates/.bowerrc
 app/templates/app/components
+app/templates/test/components
+app/templates/test/scripts
+app/templates/test/index.html
 application.zip
+
 
