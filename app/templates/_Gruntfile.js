@@ -47,6 +47,7 @@ module.exports = function (grunt) {
       all: [
         'Gruntfile.js',
         'app/scripts/**/*.js',
+        'test/spec/**/*.js',
         '!app/scripts/vendor/**/*'
       ]
     },

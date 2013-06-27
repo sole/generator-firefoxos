@@ -21,6 +21,9 @@
   "white": true,
   "predef": [
     "define",
-    "require"
+    "require",
+    "it",
+    "chai",
+    "describe"
   ]
 }
