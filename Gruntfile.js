@@ -52,8 +52,10 @@ module.exports = function (grunt) {
             'app/templates/test/index.html'],
       release: ['app/templates/node_modules',
                 'app/templates/build',
-                'app/scripts/components',
-                'app/templates/application.zip']
+                'app/components',
+                'app/templates/application.zip',
+                'app/templates/test/components',
+                'app/templates/test/scripts']
     },
 
     watch: {

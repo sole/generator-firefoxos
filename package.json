@@ -18,7 +18,9 @@
     "type": "git",
     "url": "https://github.com/pdi-innovation/generator-firefoxos.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "yeoman-generator": "~0.12.1",
+  },
   "engines": {
     "node": ">=0.8.0"
   },
@@ -28,7 +30,6 @@
     }
   ],
   "devDependencies": {
-    "yeoman-generator": "~0.12.1",
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.4.4",
     "grunt-contrib-copy": "~0.4.1",
