@@ -19,6 +19,17 @@ $ grunt push
 $ grunt reset
 ```
 
+## The tutorial
+
+Please read [How to develop apps for Firefox
+OS](https://github.com/pdi-innovation/generator-firefoxos/wiki/How-to-develop-apps-for-Firefox-OS)
+to know how you can use this generator to develop your own apps.
+
+After that, you might want to take a look at
+[What's included out of the box (and why)](://github.com/pdi-innovation/generator-firefoxos/wiki/What%27s-included-out-of-the-box-%28and-why%29)
+to have an understanding of all the tools and libraries that are
+available to you.
+
 ## License
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
