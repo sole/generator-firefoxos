@@ -109,7 +109,7 @@ module.exports = function (grunt) {
         tasks: ['cssmin']
       },<% } %><% if (shallUseFramework) { %>
       handlebars: {
-        files: ['app/templates/*.hbs'],
+        files: ['app/scripts/templates/*.hbs'],
         tasks: ['handlebars:compile']
       },<% } %>
       sass: {

@@ -16,6 +16,7 @@ To install the app in a phone for the first time, run:
 
 ```bash
 $ grunt push
+$ grunt reset
 ```
 
 ## License

@@ -1,6 +1,6 @@
 {
   "name": "generator-firefoxos",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A Yeoman generator for Firefox OS apps",
   "keywords": [
     "yeoman-generator",
