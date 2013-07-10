@@ -189,10 +189,10 @@ module.exports = function (grunt) {
             'styles/**/*.css',<% if (shallUseGaiaBB) { %>
             '!styles/gaiabb/**/*.css',
             'styles/gaiabb/all.css',
-            'styles/gaiabb/**/*.{png,gif,jpg,jpeg}',<% } %>
+            'styles/gaiabb/**/*.{png,gif,jpg,jpeg,svg}',<% } %>
             'scripts/**/*.js',
-            'icons/**/*.{png,jpg,jpeg}',
-            'images/**/*.{png,gif,jpg,jpeg}',
+            'icons/**/*.{png,jpg,jpeg,svg}',
+            'images/**/*.{png,gif,jpg,jpeg,svg}',
             '*.html',
             'manifest.webapp'
           ],
