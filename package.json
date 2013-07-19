@@ -10,7 +10,7 @@
   "bugs": "https://github.com/pdi-innovation/generator-firefoxos/issues",
   "contributors": [
     "Belén Albeza (https://github.com/belen-albeza)",
-    "Francisco Jordano (https://github.com/francisco-jordano)",
+    "Francisco Jordano (https://github.com/arcturus)",
     "Rafael Oleza (https://github.com/rafeca)"
   ],
   "main": "app/index.js",
